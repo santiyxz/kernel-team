@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kernel Developers — the team, the work and the release gate</title>
+<meta name="description" content="Meet the team behind Kernel, read three engineering case studies, and see the release gate every change passes: compile, 475 API checks and a 19-page browser sweep.">
+<meta property="og:title" content="Kernel Developers — the team behind Kernel">
+<meta property="og:description" content="The people, the case studies and the standards behind the Kernel Discord bot.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Kernel Developers">
+<meta property="og:image" content="og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Kernel Developers — the team behind Kernel">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kernel Developers — the team behind Kernel">
+<meta name="twitter:description" content="The people, the case studies and the standards behind the Kernel Discord bot.">
+<meta name="twitter:image" content="og.png">
+<meta name="theme-color" content="#08090a">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20261119c">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<div class="scroll-progress" aria-hidden="true"><span data-progress></span></div>
+
+<header class="nav-shell" id="top">
+  <div class="nav">
+    <a class="brand" href="index.html" aria-label="Kernel Developers, home">
+      <span class="mark" aria-hidden="true">K</span>
+      <span class="brand-text">Kernel <span class="brand-sub">Developers</span></span>
+    </a>
+
+    <nav class="links" id="nav-links" aria-label="Sections">
+      <a href="#team" data-nav="team">Team</a>
+      <a href="work.html" data-nav="work">Work</a>
+      <a href="#standards" data-nav="standards">Standards</a>
+      <a href="#join" data-nav="join">Join</a>
+      <a class="links-ext" href="https://santiyxz.github.io/kernel/">
+        Kernel site <span class="arrow" aria-hidden="true">↗</span>
+      </a>
+    </nav>
+
+    <div class="nav-actions">
+      <a class="nav-ghost" href="https://github.com/santiyxz" rel="noopener noreferrer" target="_blank">
+        GitHub <span class="arrow" aria-hidden="true">↗</span>
+      </a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links">
+        <span class="menu-box" aria-hidden="true"><span></span><span></span></span>
+        <span class="menu-label">Menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============================================================== HERO -->
+  <section class="hero shell" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow" data-reveal><span class="dot" aria-hidden="true"></span>Independent team · Kernel</p>
+      <h1 id="hero-title" data-reveal>We build the bot that <em>shows its work.</em></h1>
+      <p class="lede" data-reveal>
+        Kernel is designed, built and maintained by a small independent team. This site is the lab notebook:
+        who is on it, what we built, and the checks every release passes before it reaches a server.
+      </p>
+      <div class="hero-actions" data-reveal>
+        <a class="btn btn-light" href="work.html">Read the case studies</a>
+        <a class="btn btn-ghost" href="#team">Meet the team <span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+
+    <aside class="gate" data-reveal aria-label="Release gate — checks run before every release">
+      <div class="gate-head">
+        <span class="gate-title">release gate</span>
+        <span class="gate-state"><span class="dot" aria-hidden="true"></span>all passing</span>
+      </div>
+      <ul class="gate-rows">
+        <li><span class="what">Compile</span><span class="how">193 files</span><span class="pass">pass</span></li>
+        <li><span class="what">API suite</span><span class="how">475 checks</span><span class="pass">pass</span></li>
+        <li><span class="what">Options</span><span class="how">0 problems</span><span class="pass">pass</span></li>
+        <li><span class="what">Browser sweep</span><span class="how">19 pages</span><span class="pass">pass</span></li>
+      </ul>
+      <div class="gate-foot">The zip only ships when <b>every row passes</b>. No row is ever skipped quietly.</div>
+    </aside>
+  </section>
+
+  <!-- =========================================================== METRICS -->
+  <section class="metrics" aria-label="By the numbers">
+    <div class="shell metrics-grid">
+      <div class="metric" data-reveal><b data-count="107">107</b><span>commands</span></div>
+      <div class="metric" data-reveal><b data-count="475">475</b><span>API checks per release</span></div>
+      <div class="metric" data-reveal><b data-count="19">19</b><span>pages swept in a browser</span></div>
+      <div class="metric" data-reveal><b data-count="0">0</b><span>telemetry</span></div>
+    </div>
+  </section>
+
+  <!-- ============================================================== TEAM -->
+  <section class="section" id="team" aria-labelledby="team-title">
+    <div class="shell">
+      <header class="section-head split" data-reveal>
+        <div>
+          <p class="section-tag"><span class="idx">01</span> Team</p>
+          <h2 id="team-title">Small by design.</h2>
+        </div>
+        <p class="section-note">
+          A second developer card stays empty until a second developer exists. Nothing on this site is invented
+          to make the team look bigger than it is.
+        </p>
+      </header>
+
+      <div class="team-grid">
+        <article class="dev-card spotlight" data-reveal>
+          <div class="dev-head">
+            <span class="dev-avatar" aria-hidden="true">IN</span>
+            <div class="dev-id">
+              <h3>intelnito</h3>
+              <p class="dev-handle">@py.ex</p>
+            </div>
+            <span class="dev-badge">Maintainer</span>
+          </div>
+          <p class="dev-role">Founder · anti-nuke engine, case ledger and the site.</p>
+          <p class="dev-bio">
+            One person, a text editor and a stubborn belief that a moderation bot should be able to prove what it
+            did. Every developer card on this site is a real account or an honest empty seat.
+          </p>
+          <dl class="credits">
+            <div>
+              <dt>Anti-nuke snapshot &amp; restore</dt>
+              <dd>Takes a copy of channels, roles and permissions, compares it after an incident and can put the server back.</dd>
+            </div>
+            <div>
+              <dt>Hash-chained case ledger</dt>
+              <dd>Every moderation case carries the hash of the one before it, so an edited history does not verify.</dd>
+            </div>
+            <div>
+              <dt>Owner console</dt>
+              <dd>A Discord-ID-gated panel for broadcasts, backups, the watchlist, scheduled jobs and release rollbacks.</dd>
+            </div>
+            <div>
+              <dt>107 commands and this site</dt>
+              <dd>Moderation, automod, tickets, verification, economy, music and utilities — plus the static site you are reading.</dd>
+            </div>
+          </dl>
+          <ul class="dev-tags"><li>Node.js</li><li>discord.js</li><li>Security</li></ul>
+          <div class="dev-links">
+            <a href="https://github.com/santiyxz" rel="noopener noreferrer" target="_blank">GitHub <span class="arrow" aria-hidden="true">↗</span></a>
+            <a href="https://santiyxz.github.io/kernel/profile.html?dev=founder">Full profile <span class="arrow" aria-hidden="true">→</span></a>
+            <a href="work.html">Case studies <span class="arrow" aria-hidden="true">→</span></a>
+          </div>
+        </article>
+
+        <div class="team-col">
+          <article class="dev-card is-open" data-reveal>
+            <div class="dev-head">
+              <span class="dev-avatar is-open-mark" aria-hidden="true">+</span>
+              <div class="dev-id">
+                <h3>Developer seat</h3>
+                <p class="dev-handle">open</p>
+              </div>
+              <span class="dev-badge">Open slot</span>
+            </div>
+            <p class="dev-role">Commands, automod and the economy pack.</p>
+            <p class="dev-bio">
+              Reserved for the next person who joins the build. When that happens the card gets a name, a real
+              account and a public record — never a placeholder pretending to be someone.
+            </p>
+            <ul class="dev-tags"><li>discord.js</li><li>Commands</li><li>Automod</li></ul>
+            <div class="dev-links"><a href="#join">How to join <span class="arrow" aria-hidden="true">→</span></a></div>
+          </article>
+
+          <article class="dev-card" data-reveal>
+            <div class="dev-head">
+              <span class="dev-avatar is-mark" aria-hidden="true">&lt;/&gt;</span>
+              <div class="dev-id">
+                <h3>The project</h3>
+                <p class="dev-handle">what we maintain</p>
+              </div>
+              <span class="dev-badge">Spec</span>
+            </div>
+            <dl class="dev-spec">
+              <div><dt>Bot</dt><dd>107 commands, slash or <code>!</code></dd></div>
+              <div><dt>Moderation</dt><dd>cases, automod, anti-nuke</dd></div>
+              <div><dt>Storage</dt><dd>JSON files you own</dd></div>
+              <div><dt>Site</dt><dd>plain HTML, CSS and JS</dd></div>
+            </dl>
+            <div class="dev-links">
+              <a href="https://santiyxz.github.io/kernel/commands.html">Every command <span class="arrow" aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== WORK -->
+  <section class="section" id="work" aria-labelledby="work-title">
+    <div class="shell">
+      <header class="section-head split" data-reveal>
+        <div>
+          <p class="section-tag"><span class="idx">02</span> Work</p>
+          <h2 id="work-title">Three things we would show you first.</h2>
+        </div>
+        <div class="section-note">
+          <p>Each case study names the commands involved, the failure it is meant to survive and the limits we would rather state than hide.</p>
+          <p class="section-link"><a class="link-quiet" href="work.html">All case studies <span class="arrow" aria-hidden="true">→</span></a></p>
+        </div>
+      </header>
+
+      <div class="work-cards" data-stagger>
+        <a class="work-card spotlight" href="work.html#antinuke" data-reveal>
+          <span class="num">01 · Safety</span>
+          <h3>The anti-nuke engine</h3>
+          <p>Snapshots, panic lock and repair for the worst night a server can have — plus a guard that tells you when dangerous power moves.</p>
+          <span class="go">Read the case study <span class="arrow" aria-hidden="true">→</span></span>
+        </a>
+        <a class="work-card spotlight" href="work.html#cases" data-reveal>
+          <span class="num">02 · Evidence</span>
+          <h3>The case ledger</h3>
+          <p>A moderation record that stops verifying the moment someone edits it. Every case carries the hash of the one before it.</p>
+          <span class="go">Read the case study <span class="arrow" aria-hidden="true">→</span></span>
+        </a>
+        <a class="work-card spotlight" href="work.html#console" data-reveal>
+          <span class="num">03 · Control</span>
+          <h3>The owner console</h3>
+          <p>Owner-only controls gated by Discord ID — broadcasts, backups, drift checks and rollbacks — and a 404 for everyone else.</p>
+          <span class="go">Read the case study <span class="arrow" aria-hidden="true">→</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================== PROCESS -->
+  <section class="section" id="process" aria-labelledby="process-title">
+    <div class="shell">
+      <header class="section-head" data-reveal>
+        <p class="section-tag"><span class="idx">03</span> Process</p>
+        <h2 id="process-title">From an idea to a zip, in five checks.</h2>
+      </header>
+
+      <ol class="process-list" data-stagger>
+        <li data-reveal>
+          <span class="n">01</span>
+          <h3>Spec it</h3>
+          <p>A written behaviour first: what the command does, who may run it and what happens when it fails.</p>
+        </li>
+        <li data-reveal>
+          <span class="n">02</span>
+          <h3>Build it small</h3>
+          <p>One module at a time, wired through the same permission, cooldown and ownership checks as its neighbours.</p>
+        </li>
+        <li data-reveal>
+          <span class="n">03</span>
+          <h3>Static checks</h3>
+          <p>Compile every file and validate every slash option before a bot ever connects to Discord.</p>
+        </li>
+        <li data-reveal>
+          <span class="n">04</span>
+          <h3>Run the suites</h3>
+          <p>475 API checks and a 19-page browser sweep at four widths, with a clean console expected.</p>
+        </li>
+        <li data-reveal>
+          <span class="n">05</span>
+          <h3>Package honestly</h3>
+          <p>Zip only what passed. If a row fails, the release waits — the site changes the next day, not the claim.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ====================================================== ARCHITECTURE -->
+  <section class="section" id="architecture" aria-labelledby="arch-title">
+    <div class="shell">
+      <header class="section-head split" data-reveal>
+        <div>
+          <p class="section-tag"><span class="idx">04</span> Architecture</p>
+          <h2 id="arch-title">One bot, two doors.</h2>
+        </div>
+        <p class="section-note">
+          A Discord gateway on one side, a static owner console on the other, and the same JSON files behind both.
+          No database, no cloud middleman.
+        </p>
+      </header>
+
+      <div class="surface" data-reveal>
+        <div class="surface-head">
+          <span>Command surface</span>
+          <span><b>107</b> commands · 8 areas</span>
+        </div>
+        <div class="surface-bar" aria-hidden="true">
+          <span style="flex:37;background:#e6e7ea" title="Utility 37"></span>
+          <span style="flex:34;background:#c9ccd1" title="Moderation 34"></span>
+          <span style="flex:11;background:#aeb2b8" title="Gambling 11"></span>
+          <span style="flex:8;background:#d3d5d9" title="Music 8"></span>
+          <span style="flex:7;background:#8f9399" title="Security 7"></span>
+          <span style="flex:6;background:#6f7379" title="Economy 6"></span>
+          <span style="flex:2;background:#565a60" title="Anti-nuke 2"></span>
+          <span style="flex:2;background:#3f4247" title="Access 2"></span>
+        </div>
+        <ul class="surface-legend">
+          <li><i class="sw" style="background:#e6e7ea"></i>Utility <b>37</b></li>
+          <li><i class="sw" style="background:#c9ccd1"></i>Moderation <b>34</b></li>
+          <li><i class="sw" style="background:#aeb2b8"></i>Gambling <b>11</b></li>
+          <li><i class="sw" style="background:#d3d5d9"></i>Music <b>8</b></li>
+          <li><i class="sw" style="background:#8f9399"></i>Security <b>7</b></li>
+          <li><i class="sw" style="background:#6f7379"></i>Economy <b>6</b></li>
+          <li><i class="sw" style="background:#565a60"></i>Anti-nuke <b>2</b></li>
+          <li><i class="sw" style="background:#3f4247"></i>Access <b>2</b></li>
+        </ul>
+      </div>
+
+      <div class="flows">
+        <div class="flow" data-reveal>
+          <h3>Runtime</h3>
+          <ol class="flow-chain">
+            <li class="node">Discord gateway <small>events</small></li>
+            <li class="arrow" aria-hidden="true">↓</li>
+            <li class="node">discord.js v14 <small>one client</small></li>
+            <li class="arrow" aria-hidden="true">↓</li>
+            <li class="node">107 command modules <small>permission · cooldown</small></li>
+            <li class="arrow" aria-hidden="true">↓</li>
+            <li class="node">Feature modules <small>automod · tickets · games</small></li>
+            <li class="arrow" aria-hidden="true">↓</li>
+            <li class="node">JSON store <small>guilds · users · cases</small></li>
+          </ol>
+          <p class="flow-note"><b>State is plain JSON on the host you chose.</b> There is no Kernel cloud database in the middle.</p>
+        </div>
+
+        <div class="flow" data-reveal>
+          <h3>Web</h3>
+          <ol class="flow-chain">
+            <li class="node">Static site <small>GitHub Pages</small></li>
+            <li class="arrow" aria-hidden="true">↓</li>
+            <li class="node">Owner console <small>after Discord login</small></li>
+            <li class="arrow" aria-hidden="true">↓</li>
+            <li class="node">Bot web API <small>/api/owner/*</small></li>
+            <li class="arrow" aria-hidden="true">↓</li>
+            <li class="node">JSON store <small>same files, no copy</small></li>
+          </ol>
+          <p class="flow-note"><b>The owner gate is a Discord ID check, not a password.</b> Everyone else receives a 404 from owner routes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== STANDARDS -->
+  <section class="section" id="standards" aria-labelledby="standards-title">
+    <div class="shell">
+      <header class="section-head split" data-reveal>
+        <div>
+          <p class="section-tag"><span class="idx">05</span> Standards</p>
+          <h2 id="standards-title">How we ship.</h2>
+        </div>
+        <p class="section-note">
+          These are not aspirations on a slide. Each one is a rule the code and the release process already
+          follow.
+        </p>
+      </header>
+
+      <dl class="standards" data-stagger>
+        <div data-reveal>
+          <dt><span class="std-num">01</span>Plain Node.js</dt>
+          <dd>One runtime, discord.js and a folder of modules. No build step between an edit and a restart.</dd>
+        </div>
+        <div data-reveal>
+          <dt><span class="std-num">02</span>Your data stays yours</dt>
+          <dd>State lives in JSON files on the host you chose. There is no Kernel cloud database in the middle.</dd>
+        </div>
+        <div data-reveal>
+          <dt><span class="std-num">03</span>No telemetry</dt>
+          <dd>The bot does not phone home. What it records is what you can read in your own files.</dd>
+        </div>
+        <div data-reveal>
+          <dt><span class="std-num">04</span>Tested before shipped</dt>
+          <dd>Compile check, 475 API checks, option checks and browser sweeps — the same suites every release.</dd>
+        </div>
+        <div data-reveal>
+          <dt><span class="std-num">05</span>No invented numbers</dt>
+          <dd>When a feature cannot be verified, the site says so instead of printing a reassuring placeholder.</dd>
+        </div>
+        <div data-reveal>
+          <dt><span class="std-num">06</span>Small surface</dt>
+          <dd>Every command has to earn its place. There is no fixed ceiling; the list grows only when a feature does, and it sits at 107.</dd>
+        </div>
+      </dl>
+
+      <div class="stack" data-reveal aria-label="Stack">
+        <span class="stack-label">Stack</span>
+        <ul>
+          <li>Node.js</li>
+          <li>discord.js v14</li>
+          <li>Vanilla HTML / CSS / JS</li>
+          <li>GitHub Pages</li>
+          <li>JSON storage</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== JOIN -->
+  <section class="section" id="join" aria-labelledby="join-title">
+    <div class="shell">
+      <div class="join-panel" data-reveal>
+        <div>
+          <p class="section-tag"><span class="idx">06</span> Open seat</p>
+          <h2 id="join-title">There is one seat open.</h2>
+          <p class="join-copy">
+            We are looking for someone who wants to own a slice of the bot — commands, automod or the economy
+            pack — and keep the same standard: test it, document it, do not inflate it. No application form.
+            A message with what you have built is enough.
+          </p>
+          <ol class="join-steps">
+            <li><span class="n">01</span><span>Send a message with something real — a repo, a bot, a command you are proud of.</span></li>
+            <li><span class="n">02</span><span>We scope one small change and run it through the same release gate as everything else.</span></li>
+            <li><span class="n">03</span><span>If it fits, your card goes up with your account and your record — no placeholder.</span></li>
+          </ol>
+          <div class="hero-actions">
+            <a class="btn btn-light" href="https://santiyxz.github.io/kernel/contact.html">
+              Contact the team <span class="arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="btn btn-ghost" href="https://github.com/santiyxz" rel="noopener noreferrer" target="_blank">
+              GitHub <span class="arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+        <ul class="join-facts">
+          <li><span>Commitment</span><b>Part time, as it fits</b></li>
+          <li><span>Paid</span><b>No — no paid tier exists</b></li>
+          <li><span>Stack</span><b>node.js · discord.js</b></li>
+          <li><span>Review</span><b>Tests before merge</b></li>
+        </ul>
+      </div>
+
+      <div class="section-head" style="margin-top: clamp(40px, 6vw, 72px); margin-bottom: 8px;" data-reveal>
+        <h2 style="font-size: clamp(1.4rem, 2.4vw, 1.9rem);">Before you write.</h2>
+      </div>
+      <div class="faq" data-reveal>
+        <details>
+          <summary>Do I need to be in a specific Discord server?</summary>
+          <div class="faq-body">
+            <p>No. The contact form and GitHub are enough to start a conversation. Being reachable on Discord helps later, once there is a change to review, but it is not a gate.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Is this a paid position?</summary>
+          <div class="faq-body">
+            <p>No. Kernel has no paid tier, so there is no budget to pay contributors. What it offers is real ownership of a slice of the bot, public credit on this site, and code that ships.</p>
+          </div>
+        </details>
+        <details>
+          <summary>What should I know already?</summary>
+          <div class="faq-body">
+            <p>Node.js and discord.js basics for bot work — commands, events, permissions. The website is plain HTML, CSS and JavaScript with no framework, so a working knowledge of the browser is enough for site changes.</p>
+          </div>
+        </details>
+        <details>
+          <summary>How is work checked?</summary>
+          <div class="faq-body">
+            <p>Everything passes the same gate as a normal release: every file compiles, 475 API checks pass, the 13-check prefix adapter passes, slash options validate, and a 19-page browser sweep runs at four widths with a clean console. A change that fails a row does not ship.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Will I get a developer card?</summary>
+          <div class="faq-body">
+            <p>Yes, once you are part of the build. Cards use real accounts and public records — the open seat stays visibly empty until then, because inventing a presence is not how this site works.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="index.html" aria-label="Kernel Developers, home">
+          <span class="mark" aria-hidden="true">K</span>
+          <span class="brand-text">Kernel <span class="brand-sub">Developers</span></span>
+        </a>
+        <p class="foot-blurb">The independent team behind Kernel — moderation and security tooling for Discord, shipped with the checks to prove it.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Site</h4>
+        <ul>
+          <li><a href="#team">Team</a></li>
+          <li><a href="work.html">Work</a></li>
+          <li><a href="#standards">Standards</a></li>
+          <li><a href="#join">Join</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Kernel</h4>
+        <ul>
+          <li><a href="https://santiyxz.github.io/kernel/">Main site</a></li>
+          <li><a href="https://santiyxz.github.io/kernel/commands.html">Commands</a></li>
+          <li><a href="https://santiyxz.github.io/kernel/contact.html">Contact</a></li>
+          <li><a href="https://santiyxz.github.io/kernel/status.html">Status</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Elsewhere</h4>
+        <ul>
+          <li><a href="https://github.com/santiyxz" rel="noopener noreferrer" target="_blank">GitHub</a></li>
+          <li><a href="https://santiyxz.github.io/kernel/profile.html?dev=founder">Founder profile</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <p>© <span id="year">2026</span> Kernel Developers. Independent team behind Kernel — not affiliated with Discord Inc.</p>
+      <p>Monochrome by choice. Plain HTML, CSS and JS.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js?v=20261119c" defer></script>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case studies — Kernel Developers</title>
+<meta name="description" content="Three Kernel engineering case studies: the anti-nuke engine, the hash-chained case ledger and the owner console — each with its checks and its stated limits.">
+<meta property="og:title" content="Case studies — Kernel Developers">
+<meta property="og:description" content="The anti-nuke engine, the case ledger and the owner console — with the checks and the limits.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Kernel Developers">
+<meta property="og:image" content="og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Kernel Developers — the team behind Kernel">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Case studies — Kernel Developers">
+<meta name="twitter:description" content="The anti-nuke engine, the case ledger and the owner console — with the checks and the limits.">
+<meta name="twitter:image" content="og.png">
+<meta name="theme-color" content="#08090a">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20261119c">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<div class="scroll-progress" aria-hidden="true"><span data-progress></span></div>
+
+<header class="nav-shell" id="top">
+  <div class="nav">
+    <a class="brand" href="index.html" aria-label="Kernel Developers, home">
+      <span class="mark" aria-hidden="true">K</span>
+      <span class="brand-text">Kernel <span class="brand-sub">Developers</span></span>
+    </a>
+
+    <nav class="links" id="nav-links" aria-label="Sections">
+      <a href="index.html#team" data-nav="team">Team</a>
+      <a href="work.html" data-nav="work" aria-current="page">Work</a>
+      <a href="index.html#standards" data-nav="standards">Standards</a>
+      <a href="index.html#join" data-nav="join">Join</a>
+      <a class="links-ext" href="https://santiyxz.github.io/kernel/">
+        Kernel site <span class="arrow" aria-hidden="true">↗</span>
+      </a>
+    </nav>
+
+    <div class="nav-actions">
+      <a class="nav-ghost" href="https://github.com/santiyxz" rel="noopener noreferrer" target="_blank">
+        GitHub <span class="arrow" aria-hidden="true">↗</span>
+      </a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links">
+        <span class="menu-box" aria-hidden="true"><span></span><span></span></span>
+        <span class="menu-label">Menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <header class="page-head shell" aria-labelledby="page-title">
+    <p class="section-tag" data-reveal><span class="idx">Work</span> Case studies</p>
+    <h1 id="page-title" data-reveal>Case studies, with the limits included.</h1>
+    <p class="lede" data-reveal>
+      Three pieces of Kernel we would show first. Each one names the problem, what we built, how it is checked
+      and what it does not do — because a case study that only lists strengths is a brochure, not evidence.
+    </p>
+    <nav class="toc" aria-label="Case studies" data-reveal>
+      <a href="#antinuke">01 · The anti-nuke engine</a>
+      <a href="#cases">02 · The case ledger</a>
+      <a href="#console">03 · The owner console</a>
+    </nav>
+  </header>
+
+  <!-- ========================================================== ANTI-NUKE -->
+  <article class="case" id="antinuke" aria-labelledby="antinuke-title">
+    <div class="shell">
+      <header class="case-head" data-reveal>
+        <p class="case-kicker"><span class="idx">01</span> Safety</p>
+        <h2 id="antinuke-title">The anti-nuke engine</h2>
+        <p class="case-summary">
+          A compromised admin can strip a server in minutes. Kernel keeps a copy of what the server looked like
+          before that happens, a way to lock it down mid-incident, and a repair path for after.
+        </p>
+      </header>
+
+      <div class="case-grid">
+        <div class="case-body" data-reveal>
+          <h3>The problem</h3>
+          <p>
+            A rogue admin or a stolen token does not need to be clever. Deleting channels, stripping roles and
+            rewriting permissions is enough. Discord's audit log records who did what, but it does not hold a
+            copy of how the server used to look — so rebuilding by hand becomes guesswork under pressure.
+          </p>
+
+          <h3>What we built</h3>
+          <ul>
+            <li><b>Snapshots.</b> Channels, roles and permissions are copied on demand so a restore has something real to work from.</li>
+            <li><b>Panic lock.</b> <code>/antinuke</code> can lock the server down mid-incident instead of waiting for the damage to finish.</li>
+            <li><b>Damage repair.</b> A snapshot can be compared against the live server and put back where it is safe to do so.</li>
+            <li><b>Power audit.</b> <code>/security</code> lists who actually holds dangerous permissions and tells you when that changes overnight.</li>
+            <li><b>Webhook and bot landing guards.</b> <code>/nukehooks</code>, <code>/antiwebhook</code> and <code>/botlanding</code> cover the quieter ways in.</li>
+          </ul>
+
+          <h3>How it is checked</h3>
+          <p>
+            Every module passes the release gate: it compiles, its slash options validate, and the API suite
+            covers the endpoints around it. The risky parts are kept small and readable on purpose — restore and
+            lock logic is the kind of code that has to be auditable at 2&nbsp;a.m., not clever.
+          </p>
+
+          <h3>What it does not do</h3>
+          <p class="case-limit">
+            <b>A restore is only as good as the last snapshot.</b> If none was taken, there is nothing to put
+            back — the guard cannot invent a past it never recorded. Keeping snapshots on is part of using it.
+          </p>
+        </div>
+
+        <aside class="case-side" data-reveal>
+          <dl class="facts">
+            <div class="facts-head">At a glance</div>
+            <div><dt>Area</dt><dd>Safety</dd></div>
+            <div><dt>Commands</dt><dd>/antinuke · /security<br>/nukehooks · /antiwebhook</dd></div>
+            <div><dt>Storage</dt><dd>Snapshots in JSON</dd></div>
+            <div><dt>Gate</dt><dd>Compile · API · browser</dd></div>
+          </dl>
+          <a class="link-quiet" href="https://santiyxz.github.io/kernel/commands.html">See every command <span class="arrow" aria-hidden="true">↗</span></a>
+        </aside>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============================================================= CASES -->
+  <article class="case" id="cases" aria-labelledby="cases-title">
+    <div class="shell">
+      <header class="case-head" data-reveal>
+        <p class="case-kicker"><span class="idx">02</span> Evidence</p>
+        <h2 id="cases-title">The case ledger</h2>
+        <p class="case-summary">
+          A moderation record that stops verifying the moment somebody edits it. Every case carries the hash of
+          the case before it, so a rewritten history fails its own check.
+        </p>
+      </header>
+
+      <div class="case-grid">
+        <div class="case-body" data-reveal>
+          <h3>The problem</h3>
+          <p>
+            Moderation history is easy to corrupt quietly — a log channel gets trimmed, a record gets edited,
+            and the screenshot someone saved last month becomes the only copy. A ban list without a chain of
+            custody is a story, not evidence.
+          </p>
+
+          <h3>What we built</h3>
+          <ul>
+            <li><b>Chained cases.</b> Each moderation case stores the hash of the previous one, so the record forms a chain.</li>
+            <li><b>Verifiable reads.</b> <code>/cases</code> reads the record and checks the chain, instead of trusting whatever is on disk.</li>
+            <li><b>A second record.</b> <code>/audit</code> searches Discord's own audit log for who changed what, next to what Kernel recorded.</li>
+            <li><b>Newest first.</b> <code>/banlist</code> and the case views read the same record, so the numbers cannot disagree with each other.</li>
+          </ul>
+
+          <h3>How it is checked</h3>
+          <p>
+            The chain is its own test: edit any case in the middle and the verification fails at that case.
+            The command that reads it ships through the same release gate as everything else, and its options
+            are validated before the bot connects.
+          </p>
+
+          <h3>What it does not do</h3>
+          <p class="case-limit">
+            <b>The chain proves the record you hold was not edited in place.</b> It cannot prove what happened
+            on Discord that was never recorded. Evidence of absence is not what a hash chain is for.
+          </p>
+        </div>
+
+        <aside class="case-side" data-reveal>
+          <dl class="facts">
+            <div class="facts-head">At a glance</div>
+            <div><dt>Area</dt><dd>Evidence</dd></div>
+            <div><dt>Commands</dt><dd>/cases · /audit</dd></div>
+            <div><dt>Integrity</dt><dd>Hash chain</dd></div>
+            <div><dt>Storage</dt><dd>Cases in JSON</dd></div>
+          </dl>
+          <a class="link-quiet" href="https://santiyxz.github.io/kernel/commands.html">See every command <span class="arrow" aria-hidden="true">↗</span></a>
+        </aside>
+      </div>
+    </div>
+  </article>
+
+  <!-- =========================================================== CONSOLE -->
+  <article class="case" id="console" aria-labelledby="console-title">
+    <div class="shell">
+      <header class="case-head" data-reveal>
+        <p class="case-kicker"><span class="idx">03</span> Control</p>
+        <h2 id="console-title">The owner console</h2>
+        <p class="case-summary">
+          Owner-only controls without a password to leak. The console is a static page that talks to the bot,
+          and the bot only answers the Discord account that owns it.
+        </p>
+      </header>
+
+      <div class="case-grid">
+        <div class="case-body" data-reveal>
+          <h3>The problem</h3>
+          <p>
+            Running a bot needs owner tools: broadcasts, backups, scheduled jobs, a way back from a bad release.
+            Building an admin panel with its own accounts means storing credentials, and storing credentials is
+            how small projects grow their first breach.
+          </p>
+
+          <h3>What we built</h3>
+          <ul>
+            <li><b>A Discord-ID gate.</b> Owner routes live under <code>/api/owner/*</code> and answer only the owner's Discord ID; everyone else gets a 404.</li>
+            <li><b>Owner console pages.</b> Broadcasts, backups, drift checks, the watchlist, scheduled jobs and release rollbacks.</li>
+            <li><b>An error inbox.</b> Errors the bot records are readable without digging through host logs by hand.</li>
+            <li><b>No secret storage.</b> The console keeps no passwords, IP addresses, location data or login history.</li>
+          </ul>
+
+          <h3>How it is checked</h3>
+          <p>
+            The API suite covers the owner gate and the settings routes around it, and the browser sweep loads
+            the console pages alongside the public site — clean console, no broken requests — before a release
+            is packaged.
+          </p>
+
+          <h3>What it does not do</h3>
+          <p class="case-limit">
+            <b>If the bot is asleep, the console cannot act.</b> It is a static site calling your bot, not a
+            second backend. There is no Kernel cloud service holding a copy of your data.
+          </p>
+        </div>
+
+        <aside class="case-side" data-reveal>
+          <dl class="facts">
+            <div class="facts-head">At a glance</div>
+            <div><dt>Area</dt><dd>Control</dd></div>
+            <div><dt>Pages</dt><dd>console · inbox<br>dashboard · manage</dd></div>
+            <div><dt>Gate</dt><dd>Discord ID</dd></div>
+            <div><dt>Checked</dt><dd>API suite · browser</dd></div>
+          </dl>
+          <a class="link-quiet" href="https://santiyxz.github.io/kernel/">Open the Kernel site <span class="arrow" aria-hidden="true">↗</span></a>
+        </aside>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============================================================== CTA -->
+  <section class="section" aria-labelledby="cta-title">
+    <div class="shell">
+      <div class="join-panel" data-reveal>
+        <div>
+          <p class="section-tag"><span class="idx">Next</span> Build with us</p>
+          <h2 id="cta-title">Want to work on this?</h2>
+          <p class="join-copy">
+            One seat is open. Pick a workstream, bring something you have built, and we will scope a first
+            change against the same release gate the rest of the bot uses.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-light" href="index.html#join">How to join <span class="arrow" aria-hidden="true">→</span></a>
+            <a class="btn btn-ghost" href="https://santiyxz.github.io/kernel/contact.html">
+              Contact the team <span class="arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+        <ul class="join-facts">
+          <li><span>Workstreams</span><b>Commands · automod · economy</b></li>
+          <li><span>Paid</span><b>No — no paid tier exists</b></li>
+          <li><span>Gate</span><b>475 checks · 19 pages</b></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="index.html" aria-label="Kernel Developers, home">
+          <span class="mark" aria-hidden="true">K</span>
+          <span class="brand-text">Kernel <span class="brand-sub">Developers</span></span>
+        </a>
+        <p class="foot-blurb">The independent team behind Kernel — moderation and security tooling for Discord, shipped with the checks to prove it.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Site</h4>
+        <ul>
+          <li><a href="index.html#team">Team</a></li>
+          <li><a href="work.html">Work</a></li>
+          <li><a href="index.html#standards">Standards</a></li>
+          <li><a href="index.html#join">Join</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Kernel</h4>
+        <ul>
+          <li><a href="https://santiyxz.github.io/kernel/">Main site</a></li>
+          <li><a href="https://santiyxz.github.io/kernel/commands.html">Commands</a></li>
+          <li><a href="https://santiyxz.github.io/kernel/contact.html">Contact</a></li>
+          <li><a href="https://santiyxz.github.io/kernel/status.html">Status</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Elsewhere</h4>
+        <ul>
+          <li><a href="https://github.com/santiyxz" rel="noopener noreferrer" target="_blank">GitHub</a></li>
+          <li><a href="https://santiyxz.github.io/kernel/profile.html?dev=founder">Founder profile</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <p>© <span id="year">2026</span> Kernel Developers. Independent team behind Kernel — not affiliated with Discord Inc.</p>
+      <p>Monochrome by choice. Plain HTML, CSS and JS.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js?v=20261119c" defer></script>
+</body>
+</html>
