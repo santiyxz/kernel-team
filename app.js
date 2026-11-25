@@ -6,6 +6,7 @@
   const links = document.getElementById('nav-links');
   const year = document.getElementById('year');
   const progressBar = document.querySelector('[data-progress]');
+  const toTop = document.querySelector('[data-to-top]');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (year) year.textContent = String(new Date().getFullYear());
@@ -23,6 +24,17 @@
         const room = document.documentElement.scrollHeight - window.innerHeight;
         const ratio = room > 0 ? Math.min(1, Math.max(0, window.scrollY / room)) : 0;
         progressBar.style.transform = 'scaleX(' + ratio.toFixed(4) + ')';
+      }
+      if (toTop) {
+        const show = window.scrollY > 640;
+        toTop.classList.toggle('is-on', show);
+        if (show) {
+          toTop.removeAttribute('tabindex');
+          toTop.removeAttribute('aria-hidden');
+        } else {
+          toTop.setAttribute('tabindex', '-1');
+          toTop.setAttribute('aria-hidden', 'true');
+        }
       }
       updateSpy();
     });
